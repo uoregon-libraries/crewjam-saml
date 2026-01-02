@@ -197,6 +197,7 @@ type RoleDescriptor struct {
 	CacheDuration              time.Duration `xml:"cacheDuration,attr,omitempty"`
 	ProtocolSupportEnumeration string        `xml:"protocolSupportEnumeration,attr"`
 	ErrorURL                   string        `xml:"errorURL,attr,omitempty"`
+	Extensions                 *Extensions   `xml:"Extensions,omitempty"`
 	Signature                  *etree.Element
 	KeyDescriptors             []KeyDescriptor `xml:"KeyDescriptor,omitempty"`
 	Organization               *Organization   `xml:"Organization,omitempty"`
@@ -456,4 +457,15 @@ type AffiliationDescriptor struct {
 	Signature          *etree.Element
 	AffiliateMembers   []string        `xml:"AffiliateMember"`
 	KeyDescriptors     []KeyDescriptor `xml:"KeyDescriptor"`
+}
+
+type Extensions struct {
+	XMLName xml.Name      `xml:"urn:oasis:names:tc:SAML:2.0:metadata Extensions"`
+	Scopes  []ShibmdScope `xml:"urn:mace:shibboleth:metadata:1.0 Scope"`
+}
+
+type ShibmdScope struct {
+	XMLName xml.Name `xml:"urn:mace:shibboleth:metadata:1.0 Scope"`
+	Regexp  bool     `xml:"regexp,attr,omitempty"`
+	Value   string   `xml:",chardata"`
 }

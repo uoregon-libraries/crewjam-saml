@@ -24,6 +24,7 @@ type Options struct {
 	Certificate       *x509.Certificate
 	Store             Store
 	LoginFormTemplate *template.Template
+	MetadataValidScopes []string
 }
 
 // Server represents an IDP server. The server provides the following URLs:
@@ -71,6 +72,7 @@ func New(opts Options) (*Server, error) {
 			MetadataURL: metadataURL,
 			SSOURL:      ssoURL,
 			LoginURL:    loginURL,
+			MetadataValidScopes: opts.MetadataValidScopes,
 		},
 		logger:            logr,
 		Store:             opts.Store,

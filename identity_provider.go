@@ -15,6 +15,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/beevik/etree"
@@ -110,6 +111,7 @@ type IdentityProvider struct {
 	SignatureMethod         string
 	ValidDuration           *time.Duration
 	ResponseFormTemplate    *template.Template
+	MetadataValidScopes     []string
 }
 
 // Metadata returns the metadata structure for this identity provider.
@@ -175,6 +177,14 @@ func (idp *IdentityProvider) Metadata() *EntityDescriptor {
 				},
 			},
 		},
+	}
+
+	if len(idp.MetadataValidScopes) > 0 {
+		scopes := []ShibmdScope{}
+		for _, scope := range idp.MetadataValidScopes {
+			scopes = append(scopes, ShibmdScope{Value: scope, Regexp: false})
+		}
+		ed.IDPSSODescriptors[0].Extensions = &Extensions{Scopes: scopes}
 	}
 
 	if idp.LogoutURL.String() != "" {
@@ -731,13 +741,20 @@ func (DefaultAssertionMaker) MakeAssertion(req *IdpAuthnRequest, session *Sessio
 	}
 
 	if session.UserScopedAffiliation != "" {
+		parts := strings.SplitN(session.UserScopedAffiliation, "@", 2)
+		val := parts[0]
+		scope := ""
+		if len(parts) > 1 {
+			scope = parts[1]
+		}
 		attributes = append(attributes, Attribute{
 			FriendlyName: "scopedAffiliation",
 			Name:         "urn:oid:1.3.6.1.4.1.5923.1.1.1.9",
 			NameFormat:   "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
 			Values: []AttributeValue{{
 				Type:  "xs:string",
-				Value: session.UserScopedAffiliation,
+				Value: val,
+				Scope: scope,
 			}},
 		})
 	}
