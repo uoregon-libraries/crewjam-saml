@@ -1,4 +1,4 @@
-module github.com/crewjam/saml
+module github.com/uoregon-libraries/crewjam-saml
 
 go 1.22
 

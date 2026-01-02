@@ -15,7 +15,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/crewjam/saml/samlsp"
+	"github.com/uoregon-libraries/crewjam-saml/samlsp"
 )
 
 var links = map[string]Link{}
