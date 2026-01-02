@@ -1233,6 +1233,7 @@ func (a *Attribute) Element() *etree.Element {
 // See http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf §2.7.3.1.1
 type AttributeValue struct {
 	Type   string `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr"`
+	Scope  string `xml:"Scope,attr,omitempty"`
 	Value  string `xml:",chardata"`
 	NameID *NameID
 }
