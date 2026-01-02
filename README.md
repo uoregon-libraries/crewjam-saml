@@ -1,8 +1,10 @@
 # SAML
 
-[![](https://godoc.org/github.com/crewjam/saml?status.svg)](http://godoc.org/github.com/crewjam/saml)
+*Note*: this is a fork of [Crewjam's SAML][1] project so we can add custom
+attributes needed for shibboleth. **All documentation below is theirs, not
+ours**, with the exception of the example code's import name.
 
-![Build Status](https://github.com/crewjam/saml/actions/workflows/test.yml/badge.svg)
+---
 
 Package saml contains a partial implementation of the SAML standard in golang.
 SAML is a standard for identity federation, i.e. either allowing a third party to authenticate your users or allowing third parties to rely on us to authenticate their users.
@@ -54,7 +56,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/crewjam/saml/samlsp"
+	"github.com/uoregon-libraries/crewjam-saml/samlsp"
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {

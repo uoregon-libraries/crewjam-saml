@@ -1,7 +1,7 @@
 package samlsp
 
 import (
-	"github.com/crewjam/saml"
+	"github.com/uoregon-libraries/crewjam-saml"
 )
 
 var _ AssertionHandler = NopAssertionHandler{}
